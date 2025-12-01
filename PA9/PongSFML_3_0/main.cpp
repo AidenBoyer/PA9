@@ -1,28 +1,19 @@
 #include <SFML/Graphics.hpp>
+#include "Player.hpp"
 #include <iostream>
 #include <filesystem>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    //sf::Image image("Ship.png");
-
-    // Load a texture
-    sf::Texture texture;
-    //texture.loadFromImage(image);
-    texture.loadFromFile("Ship.png");
-    
-
-    // Create a sprite
-    sf::Sprite sprite(texture);
-    /*sprite.setTextureRect({ {10, 10}, {50, 30} });
-    sprite.setColor({ 255, 255, 255, 200 });
-    sprite.setPosition({ 100.f, 25.f });*/
+    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "Space Defender");
 
 
+    sf::Texture playerTexture;
+    playerTexture.loadFromFile("Ship.png");
+    Player player(playerTexture);
+
+
+    sf::Clock clock;
     while (window.isOpen())
     {
         // SFML 3-style event polling returns std::optional<sf::Event>
@@ -32,10 +23,12 @@ int main()
                 window.close();
         }
 
+        float dt = clock.restart().asSeconds();
+        player.update(dt);
+
+
         window.clear();
-        // Draw objects before displaying
-        window.draw(shape);
-        window.draw(sprite);
+        window.draw(player);
         window.display();
     }
 }
