@@ -146,6 +146,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Background.png" />
+    <Image Include="Bullet.png" />
+    <Image Include="Enemy.png" />
+    <Image Include="REAL SHIP.png" />
     <Image Include="Ship.png">
       <DeploymentContent>true</DeploymentContent>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
