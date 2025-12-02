@@ -1,11 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include <iostream>
 #include <filesystem>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "Space Defender");
+    sf::RenderWindow window(sf::VideoMode({ 600, 600 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
 
@@ -13,6 +14,10 @@ int main()
     std::cout << std::filesystem::current_path() << std::endl;
     playerTexture.loadFromFile("Ship.png");
     Player player(playerTexture);
+
+    sf::Texture enemyTexture;
+    enemyTexture.loadFromFile("Enemy.png");
+    Enemy enemy1(enemyTexture);
 
 
     sf::Clock clock;
@@ -37,11 +42,12 @@ int main()
         }
 
         float dt = clock.restart().asSeconds();
-        player.update(dt);
+        player.update(dt, window);
 
 
         window.clear();
         window.draw(player);
+        window.draw(enemy1);
         window.display();
     }
 }

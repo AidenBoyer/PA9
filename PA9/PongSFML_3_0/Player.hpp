@@ -46,6 +46,7 @@ public:
         pos.y = std::clamp(pos.y, minY, maxY);
         setPosition(pos);
     }
+
     void update(float dt) {
         sf::Vector2f movement(0.f, 0.f);
 
