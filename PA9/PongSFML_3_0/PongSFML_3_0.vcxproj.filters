@@ -23,12 +23,27 @@
     <Image Include="Ship.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bullet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Enemy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="REAL SHIP.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

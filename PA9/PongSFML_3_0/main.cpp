@@ -10,6 +10,7 @@ int main()
     const float aspectRatio = 16.0f / 9.0f;
 
     sf::Texture playerTexture;
+    std::cout << std::filesystem::current_path() << std::endl;
     playerTexture.loadFromFile("Ship.png");
     Player player(playerTexture);
 
