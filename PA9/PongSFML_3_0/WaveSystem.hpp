@@ -23,23 +23,24 @@ public:
 		int rows = 2;
 		int cols = 3;
 
-		// Scale spacing relative to window size
+		
 		float spacingX = windowSize.x * 0.1f;
 		float spacingY = windowSize.y * 0.1f;
 
 		float gridWidth = (cols - 1) * spacingX;
 		float gridHeight = (rows - 1) * spacingY;
 
-		// Calculate scale based on window size
-		float scale = std::min(windowSize.x, windowSize.y) / 600.0f; // Relative to base size of 600
+		
+		float scale = std::min(windowSize.x, windowSize.y) / 1000.0f;
 
-		// Get the scaled sprite dimensions to properly center
+		
 		sf::Vector2u textureSize = basicEnemyTexture.getSize();
 		float scaledWidth = textureSize.x * scale;
 		float scaledHeight = textureSize.y * scale;
 
 		float startX = (windowSize.x - gridWidth) / 2.0f - scaledWidth / 2.0f;
-		float startY = (windowSize.y - gridHeight) / 2.0f - scaledHeight / 2.0f;
+		//float startY = (windowSize.y - gridHeight) / 2.0f - scaledHeight / 2.0f;
+		float startY = windowSize.y * 0.1f;
 
 		for (int row = 0; row < rows; ++row) {
 			for (int col = 0; col < cols; ++col) {
