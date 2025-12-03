@@ -13,7 +13,9 @@ int main()
     sf::Texture playerTexture;
     std::cout << std::filesystem::current_path() << std::endl;
     playerTexture.loadFromFile("Ship.png");
-    Player player(playerTexture);
+    sf::Texture playerBulletTexture;
+    playerBulletTexture.loadFromFile("Bullet.png");
+    Player player(playerTexture, playerBulletTexture);
 
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");

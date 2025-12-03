@@ -5,7 +5,7 @@
 
 class Bullet : public sf::Sprite {
 public:
-	Bullet(const sf::Texture& texture, double speed = 100, double damage = 10, sf::Vector2f direction = { 0.f,0.f })
+	Bullet(const sf::Texture& texture, double speed = 1500, double damage = 10, sf::Vector2f direction = { 0.f,0.f })
 		: sf::Sprite(texture), bulletSpeed(speed), bulletDamage(damage), bulletDirection(direction)
 	{
 		float len = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
