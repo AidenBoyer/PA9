@@ -165,6 +165,9 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="WaveSystem.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\..\Downloads\samples\1BDR miscellaneous collection\GAME SOUNDS\BOMBERMAN - Sound Effects\shoot.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

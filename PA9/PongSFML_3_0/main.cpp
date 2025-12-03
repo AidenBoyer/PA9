@@ -3,12 +3,16 @@
 #include "Enemy.hpp"
 #include <iostream>
 #include <filesystem>
+#include "AudioManager.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 600, 600 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
+
+    AudioManager AudManager;
+    AudManager.playShoot();
 
     sf::Texture playerTexture;
     std::cout << std::filesystem::current_path() << std::endl;
@@ -18,7 +22,6 @@ int main()
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
     Enemy enemy1(enemyTexture);
-
 
     sf::Clock clock;
     while (window.isOpen())

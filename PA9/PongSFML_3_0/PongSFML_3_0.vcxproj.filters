@@ -53,4 +53,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\..\Downloads\samples\1BDR miscellaneous collection\GAME SOUNDS\BOMBERMAN - Sound Effects\shoot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
