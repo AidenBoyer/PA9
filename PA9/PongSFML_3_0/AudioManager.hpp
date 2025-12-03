@@ -4,13 +4,14 @@
 class AudioManager  
 {  
 public:  
-   AudioManager() // Explicitly initialize sf::Sound objects  
-   {  
+   AudioManager() : shootSound(shootBuffer), explosionSound(explosionBuffer)
+   {
+
        if (!shootBuffer.loadFromFile("shoot.wav"))  
        {  
            std::cerr << "Error loading shoot.wav\n";  
-       }  
-       shootSound.setBuffer(shootBuffer);  
+       }
+       shootSound.setBuffer(shootBuffer);
 
        if (!explosionBuffer.loadFromFile("explosion.wav"))  
        {  
@@ -23,22 +24,29 @@ public:
            std::cerr << "Error loading menumusic.wav\n";  
        }  
        menuMusic.setLoopPoints({sf::milliseconds(0)});  
+
+       if (!ingameMusic.openFromFile("ingamemusic.wav"))
+       {
+           std::cerr << "Error loading menumusic.wav\n";
+       }
+       ingameMusic.setLoopPoints({ sf::milliseconds(0) });
    }  
 
    void playShoot() { shootSound.play(); };  
    void playExplosion() { explosionSound.play(); };  
    void playMenuMusic() { menuMusic.play(); };  
-   void stopMenuMusic() { menuMusic.stop(); };  
+   void stopMenuMusic() { menuMusic.stop(); }; 
+   void playIngameMusic() { ingameMusic.play(); };
+   void stopIngameMusic() { ingameMusic.stop(); };
 
-   /*AudioManager(const AudioManager&) = delete;  
-   AudioManager& operator=(const AudioManager&) = delete;*/  
+private:
+   
+    sf::SoundBuffer shootBuffer;
+    sf::Sound shootSound;
 
-private:  
-   sf::SoundBuffer shootBuffer;  
-   sf::Sound shootSound;  
+    sf::SoundBuffer explosionBuffer;
+    sf::Sound explosionSound;
 
-   sf::SoundBuffer explosionBuffer;  
-   sf::Sound explosionSound;  
-
-   sf::Music menuMusic;  
+    sf::Music menuMusic;
+    sf::Music ingameMusic;
 };
