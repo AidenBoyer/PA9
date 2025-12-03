@@ -26,17 +26,19 @@ int main()
 
     sf::Texture playerTexture;
     std::cout << std::filesystem::current_path() << std::endl;
-    playerTexture.loadFromFile("Ship.png");
+    playerTexture.loadFromFile("REAL SHIP.png");
     sf::Texture playerBulletTexture;
     playerBulletTexture.loadFromFile("Bullet.png");
     Player player(playerTexture, playerBulletTexture);
+	player.initialize(window.getSize());
 
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
-    Enemy enemy1(enemyTexture);
+    //Enemy enemy1(enemyTexture);
 	WaveSystem waveSystem(enemyTexture);
 	waveSystem.spawnWave(1, window.getSize());
 
+    
     sf::Clock clock;
     window.setFramerateLimit(200);
     while (window.isOpen())
@@ -56,7 +58,8 @@ int main()
                 window.setSize({width, newHeight});
 
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
-				waveSystem.spawnWave(1, window.getSize());
+                waveSystem.updateLayout(window.getSize());
+				player.updateLayout(window.getSize());
             }
 
             if (currentState == GameState::Menu) {
@@ -88,7 +91,7 @@ int main()
                 window.draw(enemy);
             }
             window.draw(player);
-            window.draw(enemy1);
+            //window.draw(enemy1);
         }
         
         window.display();
