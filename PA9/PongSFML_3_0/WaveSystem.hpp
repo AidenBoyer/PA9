@@ -2,7 +2,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
-
+#include <random>
 class WaveSystem {
 
 public:
@@ -15,7 +15,7 @@ public:
 		return enemies;
 	}
 	void spawnWave(int waveNum, sf::Vector2u windowSize) {
-		if (waveNum < 0 || waveNum >= 10) return;
+		if (waveNum < 0 || waveNum >= 2) return;
 
 		currentWave = waveNum;
 		this->windowSize = windowSize;
@@ -109,20 +109,23 @@ public:
 	}
 
 	void updateEnemies(float dt) {
-		if (enemies.empty()) return;
+		if (enemies.empty()) {
+			static std::random_device rd;
+			static std::mt19937 gen(rd());
+			std::uniform_int_distribution<> dis(0, 1);
+			int randomWave = dis(gen);
+			spawnWave(randomWave, windowSize);
+			return;
+		}
 
-		// Calculate movement for this frame
 		float movement = moveDirection * moveSpeed * dt;
 
-		// Move all enemies horizontally
 		for (auto& enemy : enemies) {
 			enemy.move(sf::Vector2f(movement, 0.0f));
 		}
 
-		// Update total distance moved
 		moveDistance += std::abs(movement);
 
-		// Reverse direction when we've moved the max distance
 		if (moveDistance >= maxMoveDistance) {
 			moveDirection *= -1.0f;
 			moveDistance = 0.0f;
@@ -143,7 +146,8 @@ private:
 	float moveDistance = 0.0f;
 	float maxMoveDistance = 0.0f;
 
-	int patterns[10][2][3] = {
+	// [ammount of waves][rows][cols]
+	int patterns[2][2][3] = {
 		{
 			{1, 0, 1},
 			{1, 1, 1}
