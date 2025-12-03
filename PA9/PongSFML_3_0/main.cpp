@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
+#include "MainMenu.hpp"
 #include <iostream>
 #include <filesystem>
 
@@ -8,6 +9,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
+
+    MainMenu mainMenu;
 
     sf::Texture playerTexture;
     playerTexture.loadFromFile("Ship.png");
@@ -33,7 +36,13 @@ int main()
 
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
             }
+
+            if (mainMenu.click(window, event.value())) {
+                //Transition to game state if play button was clicked here
+            }
         }
+
+        
 
         float dt = clock.restart().asSeconds();
         player.update(dt);
