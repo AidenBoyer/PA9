@@ -13,25 +13,25 @@ void MainMenu::initMenu() {
 
 	playButton.setSize(sf::Vector2f(200.f, 60.f));
 	playButton.setPosition(sf::Vector2f(300.f, 250.f));
-	playButton.setFillColor(sf::Color(1,1,1)); //change color later
+	playButton.setFillColor(sf::Color(50, 50, 150));
 	playButton.setOutlineThickness(2.f);
 	playButton.setOutlineColor(sf::Color::White);
 
 	playText.setString("Play Game");
 	playText.setCharacterSize(25);
 	playText.setFillColor(sf::Color::White);
-	playText.setPosition(sf::Vector2f(350.f, 250.f));
+	playText.setPosition(sf::Vector2f(325.f, 260.f));
 
 	quitButton.setSize(sf::Vector2f(200.f, 60.f));
 	quitButton.setPosition(sf::Vector2f(300.f, 350.f));
-	quitButton.setFillColor(sf::Color(1, 1, 1)); //change color later
+	quitButton.setFillColor(sf::Color(150, 50, 50)); //change color later
 	quitButton.setOutlineThickness(2.f);
 	quitButton.setOutlineColor(sf::Color::White);
 
 	quitText.setString("Quit");
 	quitText.setCharacterSize(25);
 	quitText.setFillColor(sf::Color::White);
-	quitText.setPosition(sf::Vector2f(350.f, 355.f));
+	quitText.setPosition(sf::Vector2f(365.f, 360.f));
 
 	controlsText.setString("Controls: AD to move left and right, Spacebar to shoot");
 	controlsText.setCharacterSize(15);
@@ -54,6 +54,11 @@ bool MainMenu::click(sf::RenderWindow& window, sf::Event& event) {
 	return false;
 }
 
+void MainMenu::update(sf::RenderWindow& window) {
+	sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+	updateHover(mousePos);
+}
+
 void MainMenu::drawMenu(sf::RenderWindow& window) {
 	window.draw(title);
 	window.draw(playButton);
@@ -61,4 +66,20 @@ void MainMenu::drawMenu(sf::RenderWindow& window) {
 	window.draw(quitButton);
 	window.draw(quitText);
 	window.draw(controlsText);
+}
+
+void MainMenu::updateHover(sf::Vector2f mousePos) {
+	if (playButton.getGlobalBounds().contains(mousePos)) {
+		playButton.setFillColor(sf::Color(70, 70, 200));
+	}
+	else {
+		playButton.setFillColor(sf::Color(50, 50 , 150));
+	}
+
+	if (quitButton.getGlobalBounds().contains(mousePos)) {
+		quitButton.setFillColor(sf::Color(200, 70, 70));
+	}
+	else {
+		quitButton.setFillColor(sf::Color(150, 50, 50));
+	}
 }

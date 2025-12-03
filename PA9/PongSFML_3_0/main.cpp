@@ -4,18 +4,23 @@
 #include <iostream>
 #include <filesystem>
 
+enum class GameState {
+    Menu,
+    Playing
+};
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "Space Defender");
+    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
 
+    GameState currentState = GameState::Menu;
     MainMenu mainMenu;
 
     sf::Texture playerTexture;
     playerTexture.loadFromFile("Ship.png");
     Player player(playerTexture);
-
 
     sf::Clock clock;
     while (window.isOpen())
@@ -37,19 +42,33 @@ int main()
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
             }
 
-            if (mainMenu.click(window, event.value())) {
-                //Transition to game state if play button was clicked here
+            if (currentState == GameState::Menu) {
+                if (mainMenu.click(window, event.value())) {
+                    currentState = GameState::Playing; //transition to actual game here
+                }
             }
         }
 
-        
-
         float dt = clock.restart().asSeconds();
-        player.update(dt);
-
+        
+        //Different update depending on game state
+        if (currentState == GameState::Menu) {
+            mainMenu.update(window);
+        }
+        else if (currentState == GameState::Playing) {
+            player.update(dt);
+        }
 
         window.clear();
-        window.draw(player);
+        
+        //Different render depending on game state
+        if (currentState == GameState::Menu) {
+            mainMenu.drawMenu(window);
+        }
+        else if (currentState == GameState::Playing) {
+            window.draw(player);
+        }
+        
         window.display();
     }
 }

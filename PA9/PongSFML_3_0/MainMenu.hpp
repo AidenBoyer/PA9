@@ -7,7 +7,8 @@ public:
 	MainMenu();
 
 	void initMenu();
-	bool click(sf::RenderWindow& window, sf::Event& event);
+	bool click(sf::RenderWindow& window, sf::Event& event); // for recognizing mouse clicks
+	void update(sf::RenderWindow& window); //for button hover effects
 	void drawMenu(sf::RenderWindow& window);
 private:
 	sf::RectangleShape playButton;
@@ -17,4 +18,6 @@ private:
 	sf::Text quitText;
 	sf::Text controlsText;
 	sf::Text title;
+
+	void updateHover(sf::Vector2f mousePos); // helper function for hover effects
 };
