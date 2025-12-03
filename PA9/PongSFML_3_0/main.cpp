@@ -5,6 +5,7 @@
 #include <iostream>
 #include <filesystem>
 #include "AudioManager.hpp"
+#include "WaveSystem.hpp"
 
 enum class GameState {
     Menu,
@@ -14,6 +15,8 @@ enum class GameState {
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
+
+
     
     const float aspectRatio = 16.0f / 9.0f;
 
@@ -31,6 +34,8 @@ int main()
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
     Enemy enemy1(enemyTexture);
+	WaveSystem waveSystem(enemyTexture);
+	waveSystem.spawnWave(1, window.getSize());
 
     sf::Clock clock;
     while (window.isOpen())
@@ -50,6 +55,7 @@ int main()
                 window.setSize({width, newHeight});
 
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
+				waveSystem.spawnWave(1, window.getSize());
             }
 
             if (currentState == GameState::Menu) {
@@ -67,6 +73,7 @@ int main()
         }
         else if (currentState == GameState::Playing) {
             player.update(dt);
+			waveSystem.updateEnemies(dt);
         }
 
         window.clear();
@@ -76,6 +83,9 @@ int main()
             mainMenu.drawMenu(window);
         }
         else if (currentState == GameState::Playing) {
+            for (const auto& enemy : waveSystem.getEnemies()) {
+                window.draw(enemy);
+            }
             window.draw(player);
             window.draw(enemy1);
         }
