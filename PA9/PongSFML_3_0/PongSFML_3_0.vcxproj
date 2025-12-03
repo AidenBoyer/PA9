@@ -164,6 +164,7 @@
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="CollisionEngine.hpp" />
     <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="LeaderboardManager.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="WaveSystem.hpp" />
@@ -171,6 +172,9 @@
   <ItemGroup>
     <Media Include="..\..\..\..\..\Downloads\explosion.wav" />
     <Media Include="..\..\..\..\..\Downloads\shoot.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Leaderboard.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

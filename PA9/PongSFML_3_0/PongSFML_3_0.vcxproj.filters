@@ -58,6 +58,12 @@
     <ClInclude Include="MainMenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEngine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderboardManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\..\..\..\Downloads\shoot.wav">
@@ -66,5 +72,10 @@
     <Media Include="..\..\..\..\..\Downloads\explosion.wav">
       <Filter>Resource Files</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Leaderboard.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
