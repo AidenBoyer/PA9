@@ -66,9 +66,13 @@ public:
         }
 
         move(movement * playerSpeed * dt);
-        
+
     }
+
+    void destroy() { alive = false; }
+    bool isAlive() const { return alive; }
 
 private:
     float playerSpeed = 240.f;
+    bool alive = true;
 };

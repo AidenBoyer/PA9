@@ -16,45 +16,45 @@ public:
 		vector<Enemy>&  enemies,
 		vector<Bullet>& enemyBullets/*, vector<PowerUp>& powerUps*/) {
 		// check player collisions
-		for (auto player : players) {
+		for (auto &player : players) {
 			//check for collision with enemy bullets
-			for (auto enemyBullet : enemyBullets) {
+			for (auto &enemyBullet : enemyBullets) {
 				if (checkCollision(player, enemyBullet)) {
-					// TODO: player.die();
+					player.destroy();
 				}
 			}
 			// check for collision with enemies
-			for (auto enemy : enemies) {
+			for (auto &enemy : enemies) {
 				if (checkCollision(player, enemy)) {
-					// TODO: player.die();
+					player.destroy();
 				}
 			}
 
 			//// check for power up collision
-			//for (auto powerUp : powerUps) {
+			//for (auto &powerUp : powerUps) {
 			//	if (checkCollision(player, powerUp)) {
 			//		// TODO: player.applyAffect(powerUp);
-			//		// TODO: powerUp.die();
+			//		// TODO: powerUp.destory();
 			//	}
 			//}
 		}
 
 		// check enemy collisions
-		for (auto enemy : enemies) {
+		for (auto &enemy : enemies) {
 			//check for collision with player bullets
-			for (auto playerBullet : playerBullets) {
+			for (auto &playerBullet : playerBullets) {
 				if (checkCollision(enemy, playerBullet)) {
-					// TODO: enemy.die();
+					enemy.dealDamage(playerBullet.getDamage());
 				}
 			}
 		}
 
 		// check player bullet on enemy bullet collisions
-		for (auto playerBullet : playerBullets) {
-			for (auto enemyBullet : enemyBullets) {
+		for (auto &playerBullet : playerBullets) {
+			for (auto &enemyBullet : enemyBullets) {
 				if (checkCollision(playerBullet, enemyBullet)) {
-					// TODO: playerBullet.die()
-					// TODO: enemyBullet.die()
+					playerBullet.destroy();
+					enemyBullet.destroy();
 				}
 			}
 		}
