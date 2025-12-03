@@ -4,6 +4,7 @@
 #include "MainMenu.hpp"
 #include <iostream>
 #include <filesystem>
+#include "AudioManager.hpp"
 
 enum class GameState {
     Menu,
@@ -18,6 +19,9 @@ int main()
 
     GameState currentState = GameState::Menu;
     MainMenu mainMenu;
+    
+    AudioManager AudManager;
+    AudManager.playShoot();
 
     sf::Texture playerTexture;
     std::cout << std::filesystem::current_path() << std::endl;
