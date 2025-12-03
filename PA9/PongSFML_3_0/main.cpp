@@ -21,6 +21,7 @@ int main()
 
 
     sf::Clock clock;
+    window.setFramerateLimit(200);
     while (window.isOpen())
     {
         // SFML 3-style event polling returns std::optional<sf::Event>
