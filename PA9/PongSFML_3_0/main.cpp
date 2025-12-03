@@ -15,8 +15,6 @@ enum class GameState {
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
-
-
     
     const float aspectRatio = 16.0f / 9.0f;
 
@@ -29,7 +27,9 @@ int main()
     sf::Texture playerTexture;
     std::cout << std::filesystem::current_path() << std::endl;
     playerTexture.loadFromFile("Ship.png");
-    Player player(playerTexture);
+    sf::Texture playerBulletTexture;
+    playerBulletTexture.loadFromFile("Bullet.png");
+    Player player(playerTexture, playerBulletTexture);
 
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
@@ -38,6 +38,7 @@ int main()
 	waveSystem.spawnWave(1, window.getSize());
 
     sf::Clock clock;
+    window.setFramerateLimit(200);
     while (window.isOpen())
     {
         // SFML 3-style event polling returns std::optional<sf::Event>
@@ -72,7 +73,7 @@ int main()
             mainMenu.update(window);
         }
         else if (currentState == GameState::Playing) {
-            player.update(dt);
+            player.update(dt, window);
 			waveSystem.updateEnemies(dt);
         }
 

@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Bullet.hpp"
 
 
 
 class Player : public sf::Sprite {
 public:
-    Player(const sf::Texture& texture, double speed = 240)
-        : sf::Sprite(texture), playerSpeed(speed)
+    Player(const sf::Texture& texture, const sf::Texture& bulletTexture, double speed = 240)
+        : sf::Sprite(texture), bulletTexture(bulletTexture), playerSpeed(speed)
     {
     }
 
@@ -66,9 +67,21 @@ public:
         }
 
         move(movement * playerSpeed * dt);
-        
+
     }
+
+    Bullet fire() {
+        Bullet bullet(bulletTexture);
+        bullet.setPosition(this->getPosition());
+        bullet.setDirection(sf::Vector2f(0, -1));
+        return bullet;
+    }
+
+    void destroy() { alive = false; }
+    bool isAlive() const { return alive; }
 
 private:
     float playerSpeed = 240.f;
+    bool alive = true;
+    sf::Texture bulletTexture;
 };

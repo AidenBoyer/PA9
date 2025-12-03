@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="Bullet.hpp" />
+    <ClInclude Include="CollisionEngine.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />

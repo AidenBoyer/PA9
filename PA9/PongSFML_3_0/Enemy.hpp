@@ -21,7 +21,21 @@ public:
 
     }
 
+    void dealDamage(double damage) {
+        enemyHealth -= damage;
+        if (enemyHealth < 0) {
+            enemyHealth = 0;
+            alive = false;
+        }
+
+    }
+
+    void destroy() { alive = false; }
+    bool isAlive() const { return alive; }
+
 private:
-    float enemySpeed;
-    float enemyHealth;
+    bool alive = true;
+    float enemySpeed = 240;
+    float enemyHealth = 100;
+    
 };
