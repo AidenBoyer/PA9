@@ -11,7 +11,7 @@ public:
 		currentWave(-1) {
 
 	}
-	const std::vector<Enemy>& getEnemies() const {
+	std::vector<Enemy>& getEnemies() {
 		return enemies;
 	}
 	void spawnWave(int waveNum, sf::Vector2u windowSize) {

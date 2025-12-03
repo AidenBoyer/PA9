@@ -5,48 +5,60 @@
 #include "Player.hpp"
 #include "Bullet.hpp"
 #include "Enemy.hpp"
+#include "AudioManager.hpp"
+
 using std::vector;
-using std::shared_ptr;
+using std::list;
 
 class CollisionEngine {
 public:
-	void calculateCollisions(
-		vector<Player>& players,
-		vector<Bullet>& playerBullets,
+	static void applyCollisions(
+		AudioManager& AudManager,
+		Player& player,
+		list<Bullet>&   playerBullets,
 		vector<Enemy>&  enemies,
-		vector<Bullet>& enemyBullets/*, vector<PowerUp>& powerUps*/) {
+		list<Bullet>&   enemyBullets/*, vector<PowerUp>& powerUps*/) {
 		// check player collisions
-		for (auto &player : players) {
+		//for (auto &player : players) {
+		if (player.isAlive()) {
 			//check for collision with enemy bullets
 			for (auto &enemyBullet : enemyBullets) {
 				if (checkCollision(player, enemyBullet)) {
 					player.destroy();
+					AudManager.playExplosion();
 				}
 			}
 			// check for collision with enemies
 			for (auto &enemy : enemies) {
-				if (checkCollision(player, enemy)) {
+				if (enemy.isAlive() && checkCollision(player, enemy)) {
 					player.destroy();
+					AudManager.playExplosion();
 				}
 			}
 
 			//// check for power up collision
 			//for (auto &powerUp : powerUps) {
 			//	if (checkCollision(player, powerUp)) {
-			//		// TODO: player.applyAffect(powerUp);
-			//		// TODO: powerUp.destory();
+			//		// player.applyAffect(powerUp);
+			//		// powerUp.destory();
+			//		// AudManager.playPickup();
 			//	}
 			//}
 		}
+		//}
 
 		// check enemy collisions
 		for (auto &enemy : enemies) {
-			//check for collision with player bullets
-			for (auto &playerBullet : playerBullets) {
-				if (checkCollision(enemy, playerBullet)) {
-					enemy.dealDamage(playerBullet.getDamage());
+			if (enemy.isAlive()) {
+				//check for collision with player bullets
+				for (auto &playerBullet : playerBullets) {
+					if (checkCollision(enemy, playerBullet)) {
+						enemy.dealDamage(playerBullet.getDamage());
+						AudManager.playExplosion();
+					}
 				}
 			}
+			
 		}
 
 		// check player bullet on enemy bullet collisions
@@ -55,12 +67,13 @@ public:
 				if (checkCollision(playerBullet, enemyBullet)) {
 					playerBullet.destroy();
 					enemyBullet.destroy();
+					AudManager.playExplosion();
 				}
 			}
 		}
 	}
 	
-	bool checkCollision(sf::Sprite &obj1, sf::Sprite &obj2) {
+	static bool checkCollision(sf::Sprite &obj1, sf::Sprite &obj2) {
 		return obj1.getGlobalBounds().findIntersection(obj2.getGlobalBounds()).has_value();
 	}
 };

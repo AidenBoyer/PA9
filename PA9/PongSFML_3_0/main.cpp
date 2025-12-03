@@ -4,8 +4,10 @@
 #include "MainMenu.hpp"
 #include <iostream>
 #include <filesystem>
+#include <vector>
 #include "AudioManager.hpp"
 #include "WaveSystem.hpp"
+#include "CollisionEngine.hpp"
 
 enum class GameState {
     Menu,
@@ -24,12 +26,19 @@ int main()
     AudioManager AudManager;
     AudManager.playShoot();
 
-    sf::Texture playerTexture;
-    std::cout << std::filesystem::current_path() << std::endl;
-    playerTexture.loadFromFile("REAL SHIP.png");
+    std::list<Bullet> playerBullets;
+    std::list<Bullet> enemyBullets;
+
+
     sf::Texture playerBulletTexture;
     playerBulletTexture.loadFromFile("Bullet.png");
-    Player player(playerTexture, playerBulletTexture);
+    Bullet playerMasterBullet(playerBulletTexture);
+    playerMasterBullet.setScale(sf::Vector2f(.5, .5));
+    
+    sf::Texture playerTexture;
+    playerTexture.loadFromFile("REAL SHIP.png");
+    
+    Player player(playerTexture, playerMasterBullet);
 	player.initialize(window.getSize());
 
     sf::Texture enemyTexture;
@@ -76,10 +85,31 @@ int main()
             mainMenu.update(window);
         }
         else if (currentState == GameState::Playing) {
-            player.update(dt, window);
+            // update all
 			waveSystem.updateEnemies(dt);
-        }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
+                playerBullets.push_back(player.fire());
+                AudManager.playShoot();
+            }
+            for (auto it = playerBullets.begin(); it != playerBullets.end();) {
+                if (!it->isAlive()) {
+                    it = playerBullets.erase(it);
+                }
+                else {
+                    it->update(dt);
+                    ++it;
+                }
+            }
+            if (player.isAlive()) {
+                player.update(dt, window);
+            }
 
+            // collide game objects
+            // TODO
+            
+            CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
+        }
+        
         window.clear();
         
         //Different render depending on game state
@@ -88,9 +118,16 @@ int main()
         }
         else if (currentState == GameState::Playing) {
             for (const auto& enemy : waveSystem.getEnemies()) {
-                window.draw(enemy);
+                if (enemy.isAlive()) {
+                    window.draw(enemy);
+                }
             }
-            window.draw(player);
+            if (player.isAlive()) {
+                window.draw(player);
+            }
+            for (auto& bullet : playerBullets) {
+                window.draw(bullet);
+            }
             //window.draw(enemy1);
         }
         

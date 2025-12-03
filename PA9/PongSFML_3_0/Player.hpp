@@ -6,9 +6,15 @@
 
 class Player : public sf::Sprite {
 public:
-    Player(const sf::Texture& texture, const sf::Texture& bulletTexture, double speed = 240)
-        : sf::Sprite(texture), bulletTexture(bulletTexture), playerSpeed(speed){}
+    Player(const sf::Texture& texture, const Bullet& masterBullet, double speed = 240, double fireCooldown = 0.5)
+        : sf::Sprite(texture), masterBullet(masterBullet), playerSpeed(speed), maxFireCooldown(fireCooldown) {}
     void update(float dt, const sf::RenderWindow& window) {
+
+        // update firing cooldown
+        fireCooldown -= dt;
+        if (fireCooldown < 0.0) fireCooldown = 0.0;
+
+        // movement
         sf::Vector2f movement(0.f, 0.f);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
@@ -63,11 +69,18 @@ public:
     //}
 
     Bullet fire() {
-        Bullet bullet(bulletTexture);
-        bullet.setPosition(this->getPosition());
+        Bullet bullet(masterBullet);
+        
+        sf::Vector2f playerCenter(getPosition() + sf::Vector2f((getGlobalBounds().size.x / 2), (getGlobalBounds().size.y / 2)));
+        sf::Vector2f bulletPositionOffest(sf::Vector2f((bullet.getGlobalBounds().size.x / 2), (bullet.getGlobalBounds().size.y / 2)));
+        bullet.setPosition(playerCenter - bulletPositionOffest);
+
         bullet.setDirection(sf::Vector2f(0, -1));
+        fireCooldown = maxFireCooldown;
         return bullet;
     }
+
+    double getFireCooldown() { return fireCooldown; }
 
     void destroy() { alive = false; }
     bool isAlive() const { return alive; }
@@ -93,6 +106,8 @@ public:
 private:
     sf::Vector2u windowSize;
     float playerSpeed = 240.f;
+    double fireCooldown = 0.0;
+    double maxFireCooldown = 1.0;
     bool alive = true;
-    sf::Texture bulletTexture;
+    Bullet masterBullet;
 };
