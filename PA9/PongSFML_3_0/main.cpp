@@ -3,7 +3,7 @@
 #include "Enemy.hpp"
 #include <iostream>
 #include <filesystem>
-//#include "AudioManager.hpp"
+#include "AudioManager.hpp"
 
 int main()
 {
