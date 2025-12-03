@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <cmath>
+//s
 
 
 class Bullet : public sf::Sprite {
