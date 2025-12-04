@@ -38,7 +38,7 @@ private:
 	sf::RectangleShape background;
 	sf::RectangleShape continueButton;
 	sf::Text continueText;
-	sf::Text loadingText;
+		sf::Text loadingText;
 
 	sf::Text promptName;
 	sf::Text displayName;
