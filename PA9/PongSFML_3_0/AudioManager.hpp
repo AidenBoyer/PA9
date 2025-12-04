@@ -4,9 +4,9 @@
 class AudioManager  
 {  
 public:  
-   AudioManager() : shootSound(shootBuffer), explosionSound(explosionBuffer)
+   AudioManager() : shootSound(shootBuffer), explosionSound(explosionBuffer), deathSound(deathBuffer)
    {
-
+       //SFX
        if (!shootBuffer.loadFromFile("shoot.wav"))  
        {  
            std::cerr << "Error loading shoot.wav\n";  
@@ -19,6 +19,13 @@ public:
        }  
        explosionSound.setBuffer(explosionBuffer);  
 
+       if (!deathBuffer.loadFromFile("Lego yoda death sound.mp3"))
+       {
+           std::cerr << "Error loading lego yoda death sound.mp3\n";
+       }
+       deathSound.setBuffer(deathBuffer);
+
+       //MUSIC
        if (!menuMusic.openFromFile("alien shooter mainmenu theme.wav"))  
        {  
            std::cerr << "Error loading menumusic\n";  
@@ -46,6 +53,9 @@ private:
 
     sf::SoundBuffer explosionBuffer;
     sf::Sound explosionSound;
+
+    sf::SoundBuffer deathBuffer;
+    sf::Sound deathSound;
 
     sf::Music menuMusic;
     sf::Music ingameMusic;

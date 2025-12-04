@@ -24,7 +24,6 @@ int main()
     MainMenu mainMenu;
     
     AudioManager AudManager;
-    AudManager.playShoot();
 
     std::list<Bullet> playerBullets;
     std::list<Bullet> enemyBullets;

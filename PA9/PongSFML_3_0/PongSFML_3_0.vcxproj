@@ -172,6 +172,9 @@
   <ItemGroup>
     <Media Include="..\..\..\..\..\Downloads\explosion.wav" />
     <Media Include="..\..\..\..\..\Downloads\shoot.wav" />
+    <Media Include="alien shooter ingame theme.wav" />
+    <Media Include="alien shooter mainmenu theme.wav" />
+    <Media Include="Lego yoda death sound.mp3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Leaderboard.json" />
