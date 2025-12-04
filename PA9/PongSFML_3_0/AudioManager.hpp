@@ -1,6 +1,14 @@
 #pragma once  
 #include <SFML/Audio.hpp>  
-#include <iostream>  
+#include <iostream>
+
+enum class Track
+{
+    None, 
+    Menu,
+    Ingame
+};
+
 class AudioManager  
 {  
 public:  
@@ -30,21 +38,35 @@ public:
        {  
            std::cerr << "Error loading menumusic\n";  
        }  
-       menuMusic.setLoopPoints({sf::milliseconds(0)});  
+       menuMusic.setLooping(true);
 
-       if (!ingameMusic.openFromFile("alien shooter ingame theme.wav"))
+       if (!ingameMusic.openFromFile("alien shooter ingame.wav"))
        {
            std::cerr << "Error loading ingame music\n";
        }
-       ingameMusic.setLoopPoints({ sf::milliseconds(0) });
+       ingameMusic.setLooping(true);
    }  
 
    void playShoot() { shootSound.play(); };  
    void playExplosion() { explosionSound.play(); };  
-   void playMenuMusic() { menuMusic.play(); };  
-   void stopMenuMusic() { menuMusic.stop(); }; 
-   void playIngameMusic() { ingameMusic.play(); };
-   void stopIngameMusic() { ingameMusic.stop(); };
+
+   void playMenuMusic() {
+       if (currentTrack != Track::Menu)
+       {
+           stopAllMusic();
+           menuMusic.play();
+           currentTrack = Track::Menu;
+       }
+   };
+   void playIngameMusic() {
+       if (currentTrack != Track::Ingame)
+       {
+           stopAllMusic();
+           ingameMusic.play();
+           currentTrack = Track::Ingame;
+       }
+   };
+   void stopAllMusic() { ingameMusic.stop(); menuMusic.stop(); };
 
 private:
    
@@ -59,4 +81,6 @@ private:
 
     sf::Music menuMusic;
     sf::Music ingameMusic;
+
+    Track currentTrack = Track::None;
 };
