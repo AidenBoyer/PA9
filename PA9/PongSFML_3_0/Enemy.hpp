@@ -4,8 +4,8 @@
 
 class Enemy : public sf::Sprite {
 public:
-    Enemy(const sf::Texture& texture, double speed = 240, double health = 100, double firingCooldownMin = 1.0, double firingCooldownMax = 6.0)
-        : sf::Sprite(texture), enemySpeed(speed), enemyHealth(health), fireCooldownMin(firingCooldownMin), fireCooldownMax(firingCooldownMax)
+    Enemy(const sf::Texture& texture, Bullet& masterBullet, double speed = 240, double health = 100, double firingCooldownMin = 1.0, double firingCooldownMax = 6.0)
+        : sf::Sprite(texture), masterBullet(&masterBullet), enemySpeed(speed), enemyHealth(health), fireCooldownMin(firingCooldownMin), fireCooldownMax(firingCooldownMax)
     {
         setRandomCooldown();
     }
@@ -41,8 +41,8 @@ public:
 
     double getFireCooldown() { return fireCooldown; }
 
-    Bullet fire(Bullet& masterBullet) {
-        Bullet bullet(masterBullet);
+    Bullet fire() {
+        Bullet bullet(*masterBullet);
 
         sf::Vector2f playerCenter(getPosition() + sf::Vector2f((getGlobalBounds().size.x / 2), (getGlobalBounds().size.y / 2)));
         sf::Vector2f bulletPositionOffest(sf::Vector2f((bullet.getGlobalBounds().size.x / 2), (bullet.getGlobalBounds().size.y / 2)));
@@ -66,6 +66,7 @@ public:
     bool isAlive() const { return alive; }
 
 private:
+    Bullet* masterBullet;
     bool alive = true;
     float enemySpeed = 240;
     float enemyHealth = 100;

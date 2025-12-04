@@ -6,14 +6,19 @@
 class WaveSystem {
 
 public:
-	WaveSystem(const sf::Texture& baiscTexture)
-		:basicEnemyTexture(baiscTexture), basicEnemy(basicEnemyTexture),
+	WaveSystem(const sf::Texture& baiscTexture, Bullet& masterBullet)
+		:basicEnemyTexture(baiscTexture), masterBullet(&masterBullet),
 		currentWave(-1) {
 
 	}
 	std::vector<Enemy>& getEnemies() {
 		return enemies;
 	}
+	
+	int getCurrentWave() const {
+		return currentWave;
+	}
+	
 	void spawnWave(int waveNum, sf::Vector2u windowSize) {
 		if (waveNum < 0 || waveNum >= 2) return;
 
@@ -51,7 +56,7 @@ public:
 		for (int row = 0; row < rows; ++row) {
 			for (int col = 0; col < cols; ++col) {
 				if (patterns[waveNum][row][col] == 1) {
-					Enemy enemy(basicEnemyTexture);
+					Enemy enemy(basicEnemyTexture, *masterBullet);
 					enemy.setPosition(sf::Vector2f(startX + col * spacingX, startY + row * spacingY));
 					enemy.setScale(sf::Vector2f(scale, scale));
 					enemies.push_back(enemy);
@@ -138,7 +143,7 @@ private:
 	int currentWave;
 	std::vector<Enemy> enemies;
 	sf::Texture basicEnemyTexture;
-	Enemy basicEnemy;
+	Bullet* masterBullet;
 
 	sf::Vector2u windowSize;
 	float moveDirection = 1.0f;

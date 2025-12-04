@@ -6,8 +6,8 @@
 
 class Player : public sf::Sprite {
 public:
-    Player(const sf::Texture& texture, double speed = 240, double fireCooldown = 0.5)
-        : sf::Sprite(texture), playerSpeed(speed), maxFireCooldown(fireCooldown) {}
+    Player(const sf::Texture& texture, Bullet& masterBullet, double speed = 400, double fireCooldown = 0.5)
+        : sf::Sprite(texture), masterBullet(&masterBullet), playerSpeed(speed), maxFireCooldown(fireCooldown) {}
     void update(float dt, const sf::RenderWindow& window) {
 
         // update firing cooldown
@@ -68,8 +68,8 @@ public:
     //    move(movement * playerSpeed * dt
     //}
 
-    Bullet fire(Bullet& masterBullet) {
-        Bullet bullet(masterBullet);
+    Bullet fire() {
+        Bullet bullet(*masterBullet);
         
         sf::Vector2f playerCenter(getPosition() + sf::Vector2f((getGlobalBounds().size.x / 2), (getGlobalBounds().size.y / 2)));
         sf::Vector2f bulletPositionOffest(sf::Vector2f((bullet.getGlobalBounds().size.x / 2), (bullet.getGlobalBounds().size.y / 2)));
@@ -104,8 +104,9 @@ public:
 
 
 private:
+    Bullet* masterBullet;
     sf::Vector2u windowSize;
-    float playerSpeed = 240.f;
+    float playerSpeed = 400.f;
     double fireCooldown = 0.0;
     double maxFireCooldown = 1.0;
     bool alive = true;

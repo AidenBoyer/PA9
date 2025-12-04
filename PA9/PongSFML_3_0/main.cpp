@@ -32,7 +32,7 @@ int main()
     GameState currentState = GameState::Menu;
     MainMenu mainMenu;
     Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
-    int currentWaves = 0;
+    int totalWavesCompleted = 0;
 
     leaderboard.fetchScores();
     AudioManager AudManager;
@@ -46,6 +46,11 @@ int main()
     Bullet playerMasterBullet(playerBulletTexture);
     playerMasterBullet.setScale(sf::Vector2f(.5, .5));
 
+    sf::Texture enemyBulletTexture;
+    enemyBulletTexture.loadFromFile("Bullet.png");
+    Bullet enemyMasterBullet(enemyBulletTexture);
+    enemyMasterBullet.setScale(sf::Vector2f(.5, .5));
+
     sf::Texture playerTexture;
     playerTexture.loadFromFile("REAL SHIP.png");
 
@@ -55,7 +60,7 @@ int main()
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
     //Enemy enemy1(enemyTexture);
-    WaveSystem waveSystem(enemyTexture);
+    WaveSystem waveSystem(enemyTexture, enemyMasterBullet);
     waveSystem.spawnWave(1, window.getSize());
 
 
@@ -108,6 +113,7 @@ int main()
             if (currentState == GameState::Menu) {
                 if (mainMenu.click(window, event.value())) {
                     currentState = GameState::Playing; //transition to actual game here
+                    totalWavesCompleted = 0; // Reset wave counter when starting new game
                 }
             }
             else if (currentState == GameState::Leaderboard) {
@@ -128,27 +134,75 @@ int main()
         else if (currentState == GameState::Playing) {
             // update all
             AudManager.playIngameMusic();
+            
+            // Check if wave was completed before updating
+            auto& enemies = waveSystem.getEnemies();
+            bool waveWasEmpty = enemies.empty();
+            
             waveSystem.updateEnemies(dt);
+            
+            // If wave was empty and now has enemies, a new wave was spawned
+            if (waveWasEmpty && !waveSystem.getEnemies().empty()) {
+                totalWavesCompleted++;
+            }
+            
+            // Player firing
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
                 playerBullets.push_back(player.fire());
                 AudManager.playShoot();
             }
+            
+            // Enemy firing
+            for (auto& enemy : enemies) {
+                if (enemy.isAlive()) {
+                    enemy.update(dt);
+                    if (enemy.getFireCooldown() == 0.0) {
+                        enemyBullets.push_back(enemy.fire());
+                    }
+                }
+            }
+            
+            // Update player bullets
             for (auto it = playerBullets.begin(); it != playerBullets.end();) {
                 if (!it->isAlive()) {
                     it = playerBullets.erase(it);
                 }
                 else {
                     it->update(dt);
-                    ++it;
+                    // Remove bullets that go off screen
+                    if (it->getPosition().y < -100.f || it->getPosition().y > window.getSize().y + 100.f) {
+                        it = playerBullets.erase(it);
+                    }
+                    else {
+                        ++it;
+                    }
                 }
             }
+            
+            // Update enemy bullets
+            for (auto it = enemyBullets.begin(); it != enemyBullets.end();) {
+                if (!it->isAlive()) {
+                    it = enemyBullets.erase(it);
+                }
+                else {
+                    it->update(dt);
+                    // Remove bullets that go off screen
+                    if (it->getPosition().y < -100.f || it->getPosition().y > window.getSize().y + 100.f) {
+                        it = enemyBullets.erase(it);
+                    }
+                    else {
+                        ++it;
+                    }
+                }
+            }
+            
             if (player.isAlive()) {
                 player.update(dt, window);
             }
             else {
                 // Player died - transition to leaderboard
                 currentState = GameState::Leaderboard;
-                leaderboard.inputName(currentWaves);
+                leaderboard.inputName(totalWavesCompleted);
             }
             // collide game objects
             // TODO
@@ -156,8 +210,7 @@ int main()
 
 
 
-            CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
-            auto& enemies = waveSystem.getEnemies();
+            CollisionEngine::applyCollisions(AudManager, player, playerBullets, enemies, enemyBullets);
             for (std::size_t i = enemies.size(); i > 0; --i) {
                 if (!enemies[i - 1].isAlive()) {
                     enemies.erase(enemies.begin() + (i - 1));
@@ -200,6 +253,9 @@ int main()
                 window.draw(player);
             }
             for (auto& bullet : playerBullets) {
+                window.draw(bullet);
+            }
+            for (auto& bullet : enemyBullets) {
                 window.draw(bullet);
             }
         }
