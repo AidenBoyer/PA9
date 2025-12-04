@@ -1,20 +1,12 @@
 #pragma once  
 #include <SFML/Audio.hpp>  
-#include <iostream>
-
-enum class Track
-{
-    None, 
-    Menu,
-    Ingame
-};
-
+#include <iostream>  
 class AudioManager  
 {  
 public:  
-   AudioManager() : shootSound(shootBuffer), explosionSound(explosionBuffer), deathSound(deathBuffer)
+   AudioManager() : shootSound(shootBuffer), explosionSound(explosionBuffer)
    {
-       //SFX
+
        if (!shootBuffer.loadFromFile("shoot.wav"))  
        {  
            std::cerr << "Error loading shoot.wav\n";  
@@ -27,46 +19,25 @@ public:
        }  
        explosionSound.setBuffer(explosionBuffer);  
 
-       if (!deathBuffer.loadFromFile("Lego yoda death sound.mp3"))
-       {
-           std::cerr << "Error loading lego yoda death sound.mp3\n";
-       }
-       deathSound.setBuffer(deathBuffer);
-
-       //MUSIC
        if (!menuMusic.openFromFile("alien shooter mainmenu theme.wav"))  
        {  
            std::cerr << "Error loading menumusic\n";  
        }  
-       menuMusic.setLooping(true);
+       menuMusic.setLoopPoints({sf::milliseconds(0)});  
 
-       if (!ingameMusic.openFromFile("alien shooter ingame.wav"))
+       if (!ingameMusic.openFromFile("alien shooter ingame theme.wav"))
        {
            std::cerr << "Error loading ingame music\n";
        }
-       ingameMusic.setLooping(true);
+       ingameMusic.setLoopPoints({ sf::milliseconds(0) });
    }  
 
    void playShoot() { shootSound.play(); };  
    void playExplosion() { explosionSound.play(); };  
-
-   void playMenuMusic() {
-       if (currentTrack != Track::Menu)
-       {
-           stopAllMusic();
-           menuMusic.play();
-           currentTrack = Track::Menu;
-       }
-   };
-   void playIngameMusic() {
-       if (currentTrack != Track::Ingame)
-       {
-           stopAllMusic();
-           ingameMusic.play();
-           currentTrack = Track::Ingame;
-       }
-   };
-   void stopAllMusic() { ingameMusic.stop(); menuMusic.stop(); };
+   void playMenuMusic() { menuMusic.play(); };  
+   void stopMenuMusic() { menuMusic.stop(); }; 
+   void playIngameMusic() { ingameMusic.play(); };
+   void stopIngameMusic() { ingameMusic.stop(); };
 
 private:
    
@@ -76,11 +47,6 @@ private:
     sf::SoundBuffer explosionBuffer;
     sf::Sound explosionSound;
 
-    sf::SoundBuffer deathBuffer;
-    sf::Sound deathSound;
-
     sf::Music menuMusic;
     sf::Music ingameMusic;
-
-    Track currentTrack = Track::None;
 };
