@@ -149,7 +149,7 @@ private:
 	// [ammount of waves][rows][cols]
 	int patterns[2][2][3] = {
 		{
-			{1, 0, 1},
+			{1, 1, 1},
 			{1, 1, 1}
 		},
 		{

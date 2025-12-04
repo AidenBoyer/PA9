@@ -5,6 +5,7 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
+#include <algorithm>
 #include "AudioManager.hpp"
 #include "WaveSystem.hpp"
 #include "CollisionEngine.hpp"
@@ -53,10 +54,16 @@ int main()
 
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("Background.png");
-    sf::Sprite backgroundSprite(backgroundTexture);
-    backgroundSprite.setScale( sf::Vector2f(static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y)
-    );
+    sf::Sprite backgroundSprite1(backgroundTexture);
+    sf::Sprite backgroundSprite2(backgroundTexture);
+    auto winSize = window.getSize();
+    const float scaleX = static_cast<float>(winSize.x) / backgroundTexture.getSize().x;
+    const float scaleY = static_cast<float>(winSize.y) / backgroundTexture.getSize().y;
+    backgroundSprite1.setScale(sf::Vector2f(scaleX, scaleY));
+    backgroundSprite2.setScale(sf::Vector2f(scaleX, scaleY));
+    backgroundSprite1.setPosition(sf::Vector2f(0.f, 0.f));
+    backgroundSprite2.setPosition(sf::Vector2f(0.f, -static_cast<float>(winSize.y)));
+    float backgroundScrollSpeed = 100.f;
 
     
     sf::Clock clock;
@@ -81,9 +88,13 @@ int main()
                 waveSystem.updateLayout(window.getSize());
 				player.updateLayout(window.getSize());
 
-                backgroundSprite.setScale(sf::Vector2f(static_cast<float>(width) / backgroundTexture.getSize().x,
-                    static_cast<float>(height) / backgroundTexture.getSize().y)
-                );
+                
+                const float newScaleX = static_cast<float>(width) / backgroundTexture.getSize().x;
+                const float newScaleY = static_cast<float>(newHeight) / backgroundTexture.getSize().y;
+                backgroundSprite1.setScale(sf::Vector2f(newScaleX, newScaleY));
+                backgroundSprite2.setScale(sf::Vector2f(newScaleX, newScaleY));
+                backgroundSprite1.setPosition(sf::Vector2f(0.f, 0.f));
+                backgroundSprite2.setPosition(sf::Vector2f(0.f, -static_cast<float>(newHeight)));
             }
 
             if (currentState == GameState::Menu) {
@@ -122,7 +133,16 @@ int main()
             // collide game objects
             // TODO
             
+            
+            
+
             CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
+            auto& enemies = waveSystem.getEnemies();
+            enemies.erase(
+                std::remove_if(enemies.begin(), enemies.end(),
+                    [](const Enemy& enemy) { return !enemy.isAlive(); }),
+                enemies.end()
+            );
         }
         
         window.clear();
@@ -132,7 +152,22 @@ int main()
             mainMenu.drawMenu(window);
         }
         else if (currentState == GameState::Playing) {
-            window.draw(backgroundSprite);
+            float dy = backgroundScrollSpeed * dt;
+            backgroundSprite1.move(sf::Vector2f(0.f, dy));
+            backgroundSprite2.move(sf::Vector2f(0.f, dy));
+
+            // Use the current view/window height for wrapping
+            const float wrapHeight = window.getView().getSize().y;
+
+            // Wrap sprites when they move off the bottom
+            if (backgroundSprite1.getPosition().y >= wrapHeight) {
+                backgroundSprite1.setPosition(sf::Vector2f(0.f, backgroundSprite2.getPosition().y - wrapHeight));
+            }
+            if (backgroundSprite2.getPosition().y >= wrapHeight) {
+                backgroundSprite2.setPosition(sf::Vector2f(0.f, backgroundSprite1.getPosition().y - wrapHeight));
+            }
+            window.draw(backgroundSprite1);
+            window.draw(backgroundSprite2);
             for (const auto& enemy : waveSystem.getEnemies()) {
                 if (enemy.isAlive()) {
                     window.draw(enemy);
