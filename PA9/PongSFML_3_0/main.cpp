@@ -98,6 +98,7 @@ int main()
 
                 float windowRatio = static_cast<float>(width) / static_cast<float>(height);
                 sf::FloatRect viewport;
+                unsigned int newHeight = static_cast<unsigned int>(width / aspectRatio);
 
 
                 window.setSize({ width, newHeight });
