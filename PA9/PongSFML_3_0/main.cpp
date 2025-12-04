@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "MainMenu.hpp"
+#include "LeaderBoard.hpp"
 #include <iostream>
 #include <filesystem>
 #include <vector>
@@ -11,7 +12,8 @@
 #include "LeaderboardManager.hpp"
 enum class GameState {
     Menu,
-    Playing
+    Playing,
+    Leaderboard
 };
 
 int main()
@@ -28,6 +30,7 @@ int main()
     AudioManager AudManager;
     AudManager.playShoot();
 
+
     std::list<Bullet> playerBullets;
     std::list<Bullet> enemyBullets;
 
@@ -37,6 +40,13 @@ int main()
     Bullet playerMasterBullet(playerBulletTexture);
     playerMasterBullet.setScale(sf::Vector2f(.5, .5));
     
+
+    Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
+    int currentWaves = 0;
+
+	leaderboard.fetchScores();
+
+
     sf::Texture playerTexture;
     playerTexture.loadFromFile("REAL SHIP.png");
     
@@ -101,6 +111,13 @@ int main()
                     currentState = GameState::Playing; //transition to actual game here
                 }
             }
+
+            if (currentState == GameState::Leaderboard) {
+                if (leaderboard.handleEvents(window, event.value())) {
+                    currentState = GameState::Menu;
+                    leaderboard.reset();
+                }
+            }
         }
 
         float dt = clock.restart().asSeconds();
@@ -110,6 +127,7 @@ int main()
             mainMenu.update(window);
         }
         else if (currentState == GameState::Playing) {
+
             // update all
 			waveSystem.updateEnemies(dt);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
@@ -128,6 +146,13 @@ int main()
             if (player.isAlive()) {
                 player.update(dt, window);
             }
+
+            player.update(dt);
+        }
+        else {
+			leaderboard.update(window);
+        }
+
 
             // collide game objects
             // TODO
@@ -178,6 +203,9 @@ int main()
             for (auto& bullet : playerBullets) {
                 window.draw(bullet);
             }
+        }
+        else {
+			leaderboard.draw(window);
         }
         
         window.display();
