@@ -3,7 +3,6 @@
 * WITH ITS OWN MAIN.CPP IN IT
 * Contains multiple unit tests for the Leaderboard and LeaderboardManager classes
 */
-
 #include <iostream>
 #include <cassert>
 #include "LeaderBoard.hpp"
