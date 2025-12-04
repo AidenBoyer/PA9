@@ -54,7 +54,6 @@ public:
 				for (auto &playerBullet : playerBullets) {
 					if (checkCollision(enemy, playerBullet)) {
 						enemy.dealDamage(playerBullet.getDamage());
-						playerBullet.destroy();
 						AudManager.playExplosion();
 					}
 				}
@@ -63,7 +62,7 @@ public:
 		}
 
 		// check player bullet on enemy bullet collisions
-		/*for (auto &playerBullet : playerBullets) {
+		for (auto &playerBullet : playerBullets) {
 			for (auto &enemyBullet : enemyBullets) {
 				if (checkCollision(playerBullet, enemyBullet)) {
 					playerBullet.destroy();
@@ -71,7 +70,7 @@ public:
 					AudManager.playExplosion();
 				}
 			}
-		}*/
+		}
 	}
 	
 	static bool checkCollision(sf::Sprite &obj1, sf::Sprite &obj2) {
