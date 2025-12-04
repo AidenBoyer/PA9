@@ -83,7 +83,7 @@ public:
     Score* GetLeaderBoard() {
         HINTERNET hInternet = InternetOpenA("Game", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
         if (!hInternet) return nullptr;
-
+        //[figured out with the generous help of ai]
         //reference variables for crackurl
         URL_COMPONENTSA uc = { sizeof(uc) };
         char host[256], path[256];
@@ -196,12 +196,12 @@ private:
             }
         }
 
-        //copy top 5 scores to result array
+        
         for (int i = 0; i < 5 && i < count; i++) {
             topFiveScore[i] = tempScores[i];
         }
 
-        //fill remaining slots with empty scores if less than 5
+        
         for (int i = count; i < 5; i++) {
             topFiveScore[i] = { "", 0 };
         }

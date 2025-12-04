@@ -86,12 +86,14 @@ int main()
     window.setFramerateLimit(200);
     while (window.isOpen())
     {
+
         // SFML 3-style event polling returns std::optional<sf::Event>
         while (auto event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
 
+			//Used AI to help with the resize handling
             if (const auto* resized = event->getIf<sf::Event::Resized>()) {
                 unsigned int width = resized->size.x;
                 unsigned int height = resized->size.y;
@@ -135,6 +137,9 @@ int main()
                 if (mainMenu.click(window, event.value())) {
                     currentState = GameState::Playing; //transition to actual game here
                     totalWavesCompleted = 0; // Reset wave counter when starting new game
+					
+					
+                    
                 }
             }
             else if (currentState == GameState::Leaderboard) {

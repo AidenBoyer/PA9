@@ -26,7 +26,7 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
             movement.x += 1.f;
 
-        // Normalize movement vector for diagonal movement
+        
         if (movement.x != 0.f || movement.y != 0.f) {
             float len = std::sqrt(movement.x * movement.x + movement.y * movement.y);
             movement /= len;

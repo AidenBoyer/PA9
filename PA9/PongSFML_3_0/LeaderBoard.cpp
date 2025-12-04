@@ -59,6 +59,7 @@ void Leaderboard::draw(sf::RenderWindow& window) {
 	}
 }
 
+// Used AI to help generate this function
 bool Leaderboard::handleEvents(sf::RenderWindow& window, sf::Event& event) {
 	if (state == LeaderboardState::InputName) {
 		handleNameInput(event);

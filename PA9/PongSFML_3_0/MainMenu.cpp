@@ -39,6 +39,7 @@ void MainMenu::initMenu() {
 	controlsText.setPosition(sf::Vector2f(400.f - controlsText.getGlobalBounds().size.x / 2.f, 410.f));
 }
 
+//Used AI to help write this function
 bool MainMenu::click(sf::RenderWindow& window, sf::Event& event) {
 	if (const auto mouseButtonPressed = event.getIf<sf::Event::MouseButtonPressed>()) {
 		if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
