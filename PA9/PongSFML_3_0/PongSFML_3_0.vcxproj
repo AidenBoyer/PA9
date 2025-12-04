@@ -77,13 +77,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,14 +95,14 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\annie\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\annie\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -113,13 +113,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\Aiden\Documents\PA9\PA9\PongSFML_3_0\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,14 +131,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\widee\Psychosis\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;C:\Users\aarxn\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\annie\OneDrive\Documents\GitHub\PA9\PA9\PongSFML_3_0\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -150,14 +150,19 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Background.png" />
-    <Image Include="Bullet.png" />
-    <Image Include="Enemy.png" />
-    <Image Include="REAL SHIP.png" />
     <Image Include="Ship.png">
       <DeploymentContent>true</DeploymentContent>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -167,22 +172,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AudioManager.hpp" />
-    <ClInclude Include="Bullet.hpp" />
-    <ClInclude Include="CollisionEngine.hpp" />
-    <ClInclude Include="Enemy.hpp" />
-    <ClInclude Include="LeaderBoard.hpp" />
     <ClInclude Include="LeaderboardManager.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />
-    <ClInclude Include="WaveSystem.hpp" />
+    <ClInclude Include="LeaderBoard.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\..\..\Downloads\explosion.wav" />
-    <Media Include="..\..\..\..\..\Downloads\shoot.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Leaderboard.json" />
+    <Font Include="Hunters K-Pop.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

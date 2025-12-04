@@ -32,13 +32,12 @@ private:
 
 	sf::Font font;
 
-
 	sf::Text title;
 	std::array<std::unique_ptr<sf::Text>, 5> scoreTexts;
 	sf::RectangleShape background;
 	sf::RectangleShape continueButton;
 	sf::Text continueText;
-		sf::Text loadingText;
+	sf::Text loadingText;
 
 	sf::Text promptName;
 	sf::Text displayName;
