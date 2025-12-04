@@ -1,12 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
 #include "MainMenu.hpp"
+#include "LeaderBoard.hpp"
 #include <iostream>
 #include <filesystem>
 
 enum class GameState {
     Menu,
-    Playing
+    Playing,
+    Leaderboard
 };
 
 int main()
@@ -17,6 +19,11 @@ int main()
 
     GameState currentState = GameState::Menu;
     MainMenu mainMenu;
+
+    Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
+    int currentWaves = 0;
+
+	leaderboard.fetchScores();
 
     sf::Texture playerTexture;
     playerTexture.loadFromFile("Ship.png");
@@ -47,6 +54,13 @@ int main()
                     currentState = GameState::Playing; //transition to actual game here
                 }
             }
+
+            if (currentState == GameState::Leaderboard) {
+                if (leaderboard.handleEvents(window, event.value())) {
+                    currentState = GameState::Menu;
+                    leaderboard.reset();
+                }
+            }
         }
 
         float dt = clock.restart().asSeconds();
@@ -58,6 +72,9 @@ int main()
         else if (currentState == GameState::Playing) {
             player.update(dt);
         }
+        else {
+			leaderboard.update(window);
+        }
 
         window.clear();
         
@@ -67,6 +84,9 @@ int main()
         }
         else if (currentState == GameState::Playing) {
             window.draw(player);
+        }
+        else {
+			leaderboard.draw(window);
         }
         
         window.display();

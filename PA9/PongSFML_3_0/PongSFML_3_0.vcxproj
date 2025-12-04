@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LeaderBoard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
@@ -156,8 +157,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LeaderboardManager.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="LeaderBoard.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Hunters K-Pop.otf" />
