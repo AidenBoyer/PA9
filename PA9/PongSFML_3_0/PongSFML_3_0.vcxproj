@@ -143,6 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LeaderBoard.cpp" />
+    <ClCompile Include="LeaderboardUnitTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
@@ -164,6 +171,7 @@
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="CollisionEngine.hpp" />
     <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="LeaderBoard.hpp" />
     <ClInclude Include="LeaderboardManager.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />
