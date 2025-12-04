@@ -19,15 +19,15 @@ public:
        }  
        explosionSound.setBuffer(explosionBuffer);  
 
-       if (!menuMusic.openFromFile("menumusic.wav"))  
+       if (!menuMusic.openFromFile("alien shooter mainmenu theme.wav"))  
        {  
-           std::cerr << "Error loading menumusic.wav\n";  
+           std::cerr << "Error loading menumusic\n";  
        }  
        menuMusic.setLoopPoints({sf::milliseconds(0)});  
 
-       if (!ingameMusic.openFromFile("ingamemusic.wav"))
+       if (!ingameMusic.openFromFile("alien shooter ingame theme.wav"))
        {
-           std::cerr << "Error loading menumusic.wav\n";
+           std::cerr << "Error loading ingame music\n";
        }
        ingameMusic.setLoopPoints({ sf::milliseconds(0) });
    }  
