@@ -2,14 +2,19 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "MainMenu.hpp"
-#include "LeaderBoard.hpp"
 #include <iostream>
 #include <filesystem>
 #include <vector>
+#include <algorithm>
 #include "AudioManager.hpp"
 #include "WaveSystem.hpp"
 #include "CollisionEngine.hpp"
 #include "LeaderboardManager.hpp"
+#include "LeaderBoard.hpp"
+
+#include "LeaderBoard.hpp"
+
+
 enum class GameState {
     Menu,
     Playing,
@@ -21,15 +26,17 @@ int main()
 
 
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
-    
+
     const float aspectRatio = 16.0f / 9.0f;
 
     GameState currentState = GameState::Menu;
     MainMenu mainMenu;
-    
+    Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
+    int currentWaves = 0;
+
+    leaderboard.fetchScores();
     AudioManager AudManager;
     AudManager.playShoot();
-
 
     std::list<Bullet> playerBullets;
     std::list<Bullet> enemyBullets;
@@ -39,25 +46,18 @@ int main()
     playerBulletTexture.loadFromFile("Bullet.png");
     Bullet playerMasterBullet(playerBulletTexture);
     playerMasterBullet.setScale(sf::Vector2f(.5, .5));
-    
-
-    Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
-    int currentWaves = 0;
-
-	leaderboard.fetchScores();
-
 
     sf::Texture playerTexture;
     playerTexture.loadFromFile("REAL SHIP.png");
-    
+
     Player player(playerTexture, playerMasterBullet);
-	player.initialize(window.getSize());
+    player.initialize(window.getSize());
 
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
     //Enemy enemy1(enemyTexture);
-	WaveSystem waveSystem(enemyTexture);
-	waveSystem.spawnWave(1, window.getSize());
+    WaveSystem waveSystem(enemyTexture);
+    waveSystem.spawnWave(1, window.getSize());
 
 
 
@@ -74,7 +74,7 @@ int main()
     backgroundSprite2.setPosition(sf::Vector2f(0.f, -static_cast<float>(winSize.y)));
     float backgroundScrollSpeed = 100.f;
 
-    
+
     sf::Clock clock;
     window.setFramerateLimit(200);
     while (window.isOpen())
@@ -82,7 +82,7 @@ int main()
         // SFML 3-style event polling returns std::optional<sf::Event>
         while (auto event = window.pollEvent())
         {
-            if (event->is<sf::Event::Closed>()) 
+            if (event->is<sf::Event::Closed>())
                 window.close();
 
             if (const auto resized = event->getIf<sf::Event::Resized>()) {
@@ -91,13 +91,13 @@ int main()
 
                 unsigned int newHeight = static_cast<int>(width / aspectRatio);
 
-                window.setSize({width, newHeight});
+                window.setSize({ width, newHeight });
 
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
                 waveSystem.updateLayout(window.getSize());
-				player.updateLayout(window.getSize());
+                player.updateLayout(window.getSize());
 
-                
+
                 const float newScaleX = static_cast<float>(width) / backgroundTexture.getSize().x;
                 const float newScaleY = static_cast<float>(newHeight) / backgroundTexture.getSize().y;
                 backgroundSprite1.setScale(sf::Vector2f(newScaleX, newScaleY));
@@ -111,8 +111,7 @@ int main()
                     currentState = GameState::Playing; //transition to actual game here
                 }
             }
-
-            if (currentState == GameState::Leaderboard) {
+            else if (currentState == GameState::Leaderboard) {
                 if (leaderboard.handleEvents(window, event.value())) {
                     currentState = GameState::Menu;
                     leaderboard.reset();
@@ -121,15 +120,14 @@ int main()
         }
 
         float dt = clock.restart().asSeconds();
-        
+
         //Different update depending on game state
         if (currentState == GameState::Menu) {
             mainMenu.update(window);
         }
         else if (currentState == GameState::Playing) {
-
             // update all
-			waveSystem.updateEnemies(dt);
+            waveSystem.updateEnemies(dt);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
                 playerBullets.push_back(player.fire());
                 AudManager.playShoot();
@@ -146,19 +144,16 @@ int main()
             if (player.isAlive()) {
                 player.update(dt, window);
             }
-
-            player.update(dt);
-        }
-        else {
-			leaderboard.update(window);
-        }
-
-
+            else {
+                // Player died - transition to leaderboard
+                currentState = GameState::Leaderboard;
+                leaderboard.inputName(currentWaves);
+            }
             // collide game objects
             // TODO
-            
-            
-            
+
+
+
 
             CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
             auto& enemies = waveSystem.getEnemies();
@@ -168,9 +163,12 @@ int main()
                 }
             }
         }
-        
+        else if (currentState == GameState::Leaderboard) {
+            leaderboard.update(window);
+        }
+
         window.clear();
-        
+
         //Different render depending on game state
         if (currentState == GameState::Menu) {
             mainMenu.drawMenu(window);
@@ -204,10 +202,10 @@ int main()
                 window.draw(bullet);
             }
         }
-        else {
-			leaderboard.draw(window);
+        else if (currentState == GameState::Leaderboard) {
+            leaderboard.draw(window);
         }
-        
+
         window.display();
     }
 }

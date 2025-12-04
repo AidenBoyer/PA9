@@ -14,6 +14,8 @@ waveText(font), userDone(false), dataLoaded(false), currentWaves(0), state(Leade
 	for (int i = 0; i < 5; ++i) {
 		topScores[i] = { "", 0 };
 	}
+	
+	initUI();
 }
 
 void Leaderboard::fetchScores() {

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LeaderBoard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="CollisionEngine.hpp" />
     <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="LeaderBoard.hpp" />
     <ClInclude Include="LeaderboardManager.hpp" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="Player.hpp" />
