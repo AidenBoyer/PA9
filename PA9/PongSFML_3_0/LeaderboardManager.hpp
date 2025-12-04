@@ -14,6 +14,7 @@ public:
         std::string Name;
 		int Waves;
     };
+
     /*
     
      LeaderboardManager::Score* scores = leaderboard.GetLeaderBoard();
@@ -26,6 +27,8 @@ public:
             }
         }
     */
+
+
     LeaderboardManager(const std::string& url) : firebaseUrl(url) {}
 
     bool SendScore(const std::string& name, int waves) {
