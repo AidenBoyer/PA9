@@ -12,6 +12,8 @@
 #include "LeaderboardManager.hpp"
 #include "LeaderBoard.hpp"
 
+#include "LeaderBoard.hpp"
+
 
 enum class GameState {
     Menu,
