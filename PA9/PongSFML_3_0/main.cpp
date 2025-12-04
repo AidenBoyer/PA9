@@ -5,7 +5,6 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
-#include <algorithm>
 #include "AudioManager.hpp"
 #include "WaveSystem.hpp"
 #include "CollisionEngine.hpp"
@@ -138,11 +137,11 @@ int main()
 
             CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
             auto& enemies = waveSystem.getEnemies();
-            enemies.erase(
-                std::remove_if(enemies.begin(), enemies.end(),
-                    [](const Enemy& enemy) { return !enemy.isAlive(); }),
-                enemies.end()
-            );
+            for (std::size_t i = enemies.size(); i > 0; --i) {
+                if (!enemies[i - 1].isAlive()) {
+                    enemies.erase(enemies.begin() + (i - 1));
+                }
+            }
         }
         
         window.clear();
