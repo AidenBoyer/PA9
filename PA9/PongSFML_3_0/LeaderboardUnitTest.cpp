@@ -18,7 +18,7 @@ public:
         testScoreSubmission();
         testScoreFetching();
         testHighScoreDetection();
-
+        testLeaderboardReset();
         std::cout << "\n=== All Tests Completed ===" << std::endl;
     }
 
@@ -105,6 +105,32 @@ private:
 
         std::cout << "[PASS] High score detection executed" << std::endl;
     }
+
+    static void testLeaderboardReset() {
+        std::cout << "\n[TEST 5] Testing Leaderboard Reset..." << std::endl;
+
+        Leaderboard leaderboard("https://cpts122pa9-default-rtdb.firebaseio.com/leaderboard.json");
+
+        // Fetch scores and input a name
+        leaderboard.fetchScores();
+        leaderboard.inputName(10);
+
+        std::cout << "  isDone before reset: " << (leaderboard.isDone() ? "true" : "false") << std::endl;
+
+        // Reset the leaderboard
+        leaderboard.reset();
+
+        bool isDoneAfterReset = leaderboard.isDone();
+        std::cout << "  isDone after reset: " << (isDoneAfterReset ? "true" : "false") << std::endl;
+
+        if (!isDoneAfterReset) {
+            std::cout << "[PASS] Reset successfully cleared state" << std::endl;
+        }
+        else {
+            std::cout << "[FAIL] Reset did not properly clear state" << std::endl;
+        }
+    }
+
 };
 
 int main() {
