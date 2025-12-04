@@ -21,18 +21,21 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LeaderBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LeaderboardUnitTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LeaderBoardTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bullet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Enemy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="REAL SHIP.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -40,10 +43,22 @@
     <ClInclude Include="Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveSystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="MainMenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LeaderBoard.hpp">
+    <ClInclude Include="CollisionEngine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LeaderboardManager.hpp">
@@ -51,8 +66,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Hunters K-Pop.otf">
+    <Media Include="..\..\..\..\..\Downloads\shoot.wav">
       <Filter>Resource Files</Filter>
-    </Font>
+    </Media>
+    <Media Include="..\..\..\..\..\Downloads\explosion.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Leaderboard.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
