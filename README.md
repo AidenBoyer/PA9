@@ -3,7 +3,7 @@
 Team members: 
 Justin Harder - Lab Section 7
 Alexander VanCorbach - Lab Section 6
-Aiden Boyer
+Aiden Boyer - Lab Section 6
 Aaron Hong
 
 This is a simple game called Galaxy Shooter, 
