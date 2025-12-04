@@ -101,19 +101,17 @@ int main()
                 unsigned int newHeight = static_cast<unsigned int>(width / aspectRatio);
 
 
-                window.setSize({ width, newHeight });
-
-                window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
-                waveSystem.updateLayout(window.getSize());
-                player.updateLayout(window.getSize());
+                
+                waveSystem.updateLayout(sf::Vector2u(static_cast<unsigned int>(gameWidth), static_cast<unsigned int>(gameHeight)));
+                player.updateLayout(sf::Vector2u(static_cast<unsigned int>(gameWidth), static_cast<unsigned int>(gameHeight)));
 
 
-                const float newScaleX = static_cast<float>(width) / backgroundTexture.getSize().x;
-                const float newScaleY = static_cast<float>(newHeight) / backgroundTexture.getSize().y;
+                const float newScaleX = gameWidth / backgroundTexture.getSize().x;
+                const float newScaleY = gameHeight / backgroundTexture.getSize().y;
                 backgroundSprite1.setScale(sf::Vector2f(newScaleX, newScaleY));
                 backgroundSprite2.setScale(sf::Vector2f(newScaleX, newScaleY));
                 backgroundSprite1.setPosition(sf::Vector2f(0.f, 0.f));
-                backgroundSprite2.setPosition(sf::Vector2f(0.f, -static_cast<float>(newHeight)));
+                backgroundSprite2.setPosition(sf::Vector2f(0.f, -gameHeight));
 
                 if (windowRatio > aspectRatio) {
                    
