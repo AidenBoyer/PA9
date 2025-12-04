@@ -8,7 +8,7 @@
 #include "AudioManager.hpp"
 #include "WaveSystem.hpp"
 #include "CollisionEngine.hpp"
-
+#include "LeaderboardManager.hpp"
 enum class GameState {
     Menu,
     Playing
@@ -16,6 +16,8 @@ enum class GameState {
 
 int main()
 {
+
+
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
@@ -47,6 +49,15 @@ int main()
 	WaveSystem waveSystem(enemyTexture);
 	waveSystem.spawnWave(1, window.getSize());
 
+
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.loadFromFile("Background.png");
+    sf::Sprite backgroundSprite(backgroundTexture);
+    backgroundSprite.setScale( sf::Vector2f(static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y)
+    );
+
     
     sf::Clock clock;
     window.setFramerateLimit(200);
@@ -69,6 +80,10 @@ int main()
                 window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
                 waveSystem.updateLayout(window.getSize());
 				player.updateLayout(window.getSize());
+
+                backgroundSprite.setScale(sf::Vector2f(static_cast<float>(width) / backgroundTexture.getSize().x,
+                    static_cast<float>(height) / backgroundTexture.getSize().y)
+                );
             }
 
             if (currentState == GameState::Menu) {
@@ -117,6 +132,7 @@ int main()
             mainMenu.drawMenu(window);
         }
         else if (currentState == GameState::Playing) {
+            window.draw(backgroundSprite);
             for (const auto& enemy : waveSystem.getEnemies()) {
                 if (enemy.isAlive()) {
                     window.draw(enemy);
@@ -128,7 +144,6 @@ int main()
             for (auto& bullet : playerBullets) {
                 window.draw(bullet);
             }
-            //window.draw(enemy1);
         }
         
         window.display();
