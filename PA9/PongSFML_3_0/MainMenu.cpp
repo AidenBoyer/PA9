@@ -33,7 +33,7 @@ void MainMenu::initMenu() {
 	quitText.setFillColor(sf::Color::White);
 	quitText.setPosition(sf::Vector2f(365.f, 300.f));
 
-	controlsText.setString("Controls: AD to move left and right, Spacebar to shoot");
+	controlsText.setString("Controls: WASD to move your ship, Spacebar to shoot");
 	controlsText.setCharacterSize(15);
 	controlsText.setFillColor(sf::Color::White);
 	controlsText.setPosition(sf::Vector2f(400.f - controlsText.getGlobalBounds().size.x / 2.f, 410.f));
