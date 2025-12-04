@@ -26,22 +26,22 @@ int main()
     MainMenu mainMenu;
     
     AudioManager AudManager;
-    AudManager.playShoot();
 
     std::list<Bullet> playerBullets;
     std::list<Bullet> enemyBullets;
 
 
-    sf::Texture playerBulletTexture;
-    playerBulletTexture.loadFromFile("Bullet.png");
-    Bullet playerMasterBullet(playerBulletTexture);
-    playerMasterBullet.setScale(sf::Vector2f(.5, .5));
+    sf::Texture bulletTexture;
+    bulletTexture.loadFromFile("Bullet.png");
+    Bullet masterBullet(bulletTexture);
+    masterBullet.setScale(sf::Vector2f(.25, .25));
     
     sf::Texture playerTexture;
     playerTexture.loadFromFile("REAL SHIP.png");
     
-    Player player(playerTexture, playerMasterBullet);
+    Player player(playerTexture);
 	player.initialize(window.getSize());
+    player.setScale(sf::Vector2f(.25, .25));
 
     sf::Texture enemyTexture;
     enemyTexture.loadFromFile("Enemy.png");
@@ -110,11 +110,24 @@ int main()
             mainMenu.update(window);
         }
         else if (currentState == GameState::Playing) {
+
+            // collide game objects
+            // TODO
+            CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
+
             // update all
 			waveSystem.updateEnemies(dt);
+            auto& enemies = waveSystem.getEnemies();
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
-                playerBullets.push_back(player.fire());
+                playerBullets.push_back(player.fire(masterBullet));
                 AudManager.playShoot();
+            }
+            for (auto& enemy : enemies) {
+                enemy.reduceFireCooldown(dt);
+                if (enemy.getFireCooldown() == 0.0) {
+                    enemyBullets.push_back(enemy.fire(masterBullet));
+                }
             }
             for (auto it = playerBullets.begin(); it != playerBullets.end();) {
                 if (!it->isAlive()) {
@@ -125,18 +138,20 @@ int main()
                     ++it;
                 }
             }
+            for (auto it = enemyBullets.begin(); it != enemyBullets.end();) {
+                if (!it->isAlive()) {
+                    it = enemyBullets.erase(it);
+                }
+                else {
+                    it->update(dt);
+                    ++it;
+                }
+            }
             if (player.isAlive()) {
                 player.update(dt, window);
             }
 
-            // collide game objects
-            // TODO
             
-            
-            
-
-            CollisionEngine::applyCollisions(AudManager, player, playerBullets, waveSystem.getEnemies(), enemyBullets);
-            auto& enemies = waveSystem.getEnemies();
             for (std::size_t i = enemies.size(); i > 0; --i) {
                 if (!enemies[i - 1].isAlive()) {
                     enemies.erase(enemies.begin() + (i - 1));
@@ -176,6 +191,9 @@ int main()
                 window.draw(player);
             }
             for (auto& bullet : playerBullets) {
+                window.draw(bullet);
+            }
+            for (auto& bullet : enemyBullets) {
                 window.draw(bullet);
             }
         }
