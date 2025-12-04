@@ -113,8 +113,8 @@ void Leaderboard::inputName(int waves) {
 }
 
 void Leaderboard::initUI() {
-	background.setSize(sf::Vector2f( 600.0f, 500.0f ));
-	background.setPosition(sf::Vector2f(100.0f, 50.0f ));
+	background.setSize(sf::Vector2f( 600.0f, 400.0f ));
+	background.setPosition(sf::Vector2f(100.0f, 25.0f ));
 	background.setFillColor(sf::Color(20, 20, 40, 230));
 	background.setOutlineThickness(3.f);
 	background.setOutlineColor(sf::Color::Yellow);
@@ -122,53 +122,54 @@ void Leaderboard::initUI() {
 	title.setString("Leaderboard");
 	title.setCharacterSize(40);
 	title.setFillColor(sf::Color::White);
-	title.setPosition(sf::Vector2f(250.0f, 80.0f ));
+	title.setPosition(sf::Vector2f(250.0f, 50.0f ));
 
 	loadingText.setString("Loading Scores...");
 	loadingText.setCharacterSize(30);
 	loadingText.setFillColor(sf::Color::White);
-	loadingText.setPosition(sf::Vector2f(320.0f, 300.0f ));
+	loadingText.setPosition(sf::Vector2f(320.0f, 255.0f ));
 
 	for (int i = 0; i < 5; ++i) {
 		scoreTexts[i]->setCharacterSize(25);
 		scoreTexts[i]->setFillColor(sf::Color::White);
-		scoreTexts[i]->setPosition(sf::Vector2f(150.0f, 160.0f + i * 60.0f));
+		scoreTexts[i]->setPosition(sf::Vector2f(150.0f, 120.0f + i * 50.0f));
 	}
 
 	continueButton.setSize(sf::Vector2f(200.0f, 50.0f ));
 	continueButton.setFillColor(sf::Color(50, 150, 50));
-	continueButton.setPosition(sf::Vector2f(300.0f, 480.0f));
+	continueButton.setPosition(sf::Vector2f(300.0f, 380.0f));
 	continueButton.setOutlineThickness(2.f);
 	continueButton.setOutlineColor(sf::Color::White);
 
 	continueText.setString("Continue");
 	continueText.setCharacterSize(24);
 	continueText.setFillColor(sf::Color::White);
-	continueText.setPosition(sf::Vector2f(340.0f, 490.0f));
+	continueText.setPosition(sf::Vector2f(340.0f, 390.0f));
 
 	waveText.setCharacterSize(30);
 	waveText.setFillColor(sf::Color::Yellow);
-	waveText.setPosition(sf::Vector2f(280.0f, 180.0f));
+	waveText.setPosition(sf::Vector2f(280.0f, 140.0f));
 
 	promptName.setString("Enter Name:");
 	promptName.setCharacterSize(24);
 	promptName.setFillColor(sf::Color::White);
-	promptName.setPosition(sf::Vector2f(270.0f, 240.0f));
+	promptName.setPosition(sf::Vector2f(270.0f, 200.0f));
 
 	inputBox.setSize(sf::Vector2f(300.f, 40.f));
 	inputBox.setFillColor(sf::Color(50, 50, 50));
 	inputBox.setOutlineThickness(2.f);
 	inputBox.setOutlineColor(sf::Color::White);
 	inputBox.setFillColor(sf::Color(50, 50, 50));
+	inputBox.setPosition(sf::Vector2f(250.0f, 245.0f));
 
 	displayName.setCharacterSize(25);
 	displayName.setFillColor(sf::Color::White);	
-	displayName.setPosition(sf::Vector2f(260.0f, 285.0f));
+	displayName.setPosition(sf::Vector2f(260.0f, 250.0f));
 
-	instructionText.setString("Press Enter to when done (max 15 character)");
+	instructionText.setString("Press Enter when done (max 15 character)");
 	instructionText.setCharacterSize(16);
 	instructionText.setFillColor(sf::Color(200, 200, 200));
-	instructionText.setPosition(sf::Vector2f(210.0f, 350.0f));
+	instructionText.setPosition(sf::Vector2f(210.0f, 310.0f));
 }
 
 void Leaderboard::updateDisplay() {

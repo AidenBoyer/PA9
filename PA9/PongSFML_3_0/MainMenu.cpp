@@ -8,11 +8,11 @@ MainMenu::MainMenu() : playText(font), quitText(font), title(font), controlsText
 void MainMenu::initMenu() {
 	title.setString("Galaxy Shooter");
 	title.setCharacterSize(50);
-	title.setFillColor(sf::Color::Yellow); //change color later
-	title.setPosition(sf::Vector2f(400.f - title.getGlobalBounds().size.x / 2.f, 100.f));
+	title.setFillColor(sf::Color::Yellow);
+	title.setPosition(sf::Vector2f(400.f - title.getGlobalBounds().size.x / 2.f, 80.f));
 
 	playButton.setSize(sf::Vector2f(200.f, 60.f));
-	playButton.setPosition(sf::Vector2f(300.f, 250.f));
+	playButton.setPosition(sf::Vector2f(300.f, 200.f));
 	playButton.setFillColor(sf::Color(50, 50, 150));
 	playButton.setOutlineThickness(2.f);
 	playButton.setOutlineColor(sf::Color::White);
@@ -20,23 +20,23 @@ void MainMenu::initMenu() {
 	playText.setString("Play Game");
 	playText.setCharacterSize(25);
 	playText.setFillColor(sf::Color::White);
-	playText.setPosition(sf::Vector2f(325.f, 260.f));
+	playText.setPosition(sf::Vector2f(325.f, 210.f));
 
 	quitButton.setSize(sf::Vector2f(200.f, 60.f));
-	quitButton.setPosition(sf::Vector2f(300.f, 350.f));
-	quitButton.setFillColor(sf::Color(150, 50, 50)); //change color later
+	quitButton.setPosition(sf::Vector2f(300.f, 290.f));
+	quitButton.setFillColor(sf::Color(150, 50, 50));
 	quitButton.setOutlineThickness(2.f);
 	quitButton.setOutlineColor(sf::Color::White);
 
 	quitText.setString("Quit");
 	quitText.setCharacterSize(25);
 	quitText.setFillColor(sf::Color::White);
-	quitText.setPosition(sf::Vector2f(365.f, 360.f));
+	quitText.setPosition(sf::Vector2f(365.f, 300.f));
 
 	controlsText.setString("Controls: AD to move left and right, Spacebar to shoot");
 	controlsText.setCharacterSize(15);
 	controlsText.setFillColor(sf::Color::White);
-	controlsText.setPosition(sf::Vector2f(400.f - controlsText.getGlobalBounds().size.x / 2.f, 550.f));
+	controlsText.setPosition(sf::Vector2f(400.f - controlsText.getGlobalBounds().size.x / 2.f, 410.f));
 }
 
 bool MainMenu::click(sf::RenderWindow& window, sf::Event& event) {

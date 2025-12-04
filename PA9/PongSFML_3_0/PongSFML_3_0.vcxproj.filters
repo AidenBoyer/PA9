@@ -27,9 +27,6 @@
     <ClCompile Include="LeaderboardUnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LeaderBoardTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ship.png">

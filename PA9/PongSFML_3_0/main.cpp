@@ -16,6 +16,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "Space Defender");
     
     const float aspectRatio = 16.0f / 9.0f;
+    const float gameWidth = 800.0f;
+    const float gameHeight = gameWidth / aspectRatio;
+    const sf::Vector2f gameSize(gameWidth, gameHeight);
 
     GameState currentState = GameState::Menu;
     MainMenu mainMenu;
@@ -38,15 +41,28 @@ int main()
             if (event->is<sf::Event::Closed>()) 
                 window.close();
 
-            if (const auto resized = event->getIf<sf::Event::Resized>()) {
+            if (const auto* resized = event->getIf<sf::Event::Resized>()) {
                 unsigned int width = resized->size.x;
                 unsigned int height = resized->size.y;
 
-                unsigned int newHeight = static_cast<int>(width / aspectRatio);
+                float windowRatio = static_cast<float>(width) / static_cast<float>(height);
+                sf::FloatRect viewport;
 
-                window.setSize({width, newHeight});
+                if (windowRatio > aspectRatio) {
+                   
+                    float viewportWidth = aspectRatio / windowRatio;
+                    viewport = sf::FloatRect({ (1.0f - viewportWidth) / 2.0f, 0.0f },
+                        { viewportWidth, 1.0f });
+                }
+                else {
+                    float viewportHeight = windowRatio / aspectRatio;
+                    viewport = sf::FloatRect({ 0.0f, (1.0f - viewportHeight) / 2.0f },
+                        { 1.0f, viewportHeight });
+                }
 
-                window.setView(sf::View(sf::FloatRect({ 0.0f, 0.0f }, { static_cast<float>(width),  static_cast<float>(newHeight) })));
+                sf::View view(sf::FloatRect({ 0.0f, 0.0f }, gameSize));
+                view.setViewport(viewport);
+                window.setView(view);
             }
 
             if (currentState == GameState::Menu) {
