@@ -36,7 +36,6 @@ int main()
 
     leaderboard.fetchScores();
     AudioManager AudManager;
-    AudManager.playShoot();
 
     std::list<Bullet> playerBullets;
     std::list<Bullet> enemyBullets;
@@ -124,9 +123,11 @@ int main()
         //Different update depending on game state
         if (currentState == GameState::Menu) {
             mainMenu.update(window);
+            AudManager.playMenuMusic();
         }
         else if (currentState == GameState::Playing) {
             // update all
+            AudManager.playIngameMusic();
             waveSystem.updateEnemies(dt);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.getFireCooldown() == 0.0) {
                 playerBullets.push_back(player.fire());

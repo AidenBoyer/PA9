@@ -70,7 +70,7 @@ public:
 
     Bullet fire() {
         Bullet bullet(masterBullet);
-        
+
         sf::Vector2f playerCenter(getPosition() + sf::Vector2f((getGlobalBounds().size.x / 2), (getGlobalBounds().size.y / 2)));
         sf::Vector2f bulletPositionOffest(sf::Vector2f((bullet.getGlobalBounds().size.x / 2), (bullet.getGlobalBounds().size.y / 2)));
         bullet.setPosition(playerCenter - bulletPositionOffest);
